@@ -73,7 +73,7 @@ class MainFrame(tk.Frame):
 
     def open_dialog(self):
         """Открытие диалогового окна для добавления записи"""
-        Child()
+        ChildFrame()
 
     def records(self, name, tel, email):
         """Добавление новой записи в базу данных и обновление отображения"""
@@ -88,7 +88,7 @@ class MainFrame(tk.Frame):
 
     def open_update_dialog(self):
         """Открытие диалогового окна для редактирования записи"""
-        Update()
+        UpdateEmployeeDataFrame()
 
     def update_records(self, name, tel, email):
         """Обновление выбранной записи в базе данных и обновление отображения"""
@@ -111,7 +111,7 @@ class MainFrame(tk.Frame):
 
     def open_search_dialog(self):
         """Открытие диалогового окна для поиска записей"""
-        Search()
+        SearchEmployeeFrame()
 
     def search_records(self, name):
         """Поиск записей в базе данных по заданному имени и обновление отображения"""
@@ -124,7 +124,6 @@ class MainFrame(tk.Frame):
 class ChildFrame(tk.Toplevel):
     def __init__(self):
         super().__init__(root)
-        self.init_child()
         self.view = app
         self.title("Добавить")
         self.geometry("400x220")
@@ -161,7 +160,7 @@ class ChildFrame(tk.Toplevel):
         )
 
 
-class UpdateEmployeeDataFrame(Child):
+class UpdateEmployeeDataFrame(ChildFrame):
     def __init__(self):
         super().__init__()
         self.init_edit()
@@ -197,11 +196,7 @@ class UpdateEmployeeDataFrame(Child):
 class SearchEmployeeFrame(tk.Toplevel):
     def __init__(self):
         super().__init__()
-        self.init_search()
         self.view = app
-
-    def init_search(self):
-        """Инициализация окна поиска"""
         self.title("Поиск сотрудника")
         self.geometry("300x100")
         self.resizable(False, False)
@@ -249,12 +244,9 @@ class DB:
 if __name__ == "__main__":
     root = tk.Tk()
     db = DB()
-    app = Main(root)
+    app = MainFrame(root)
     app.pack()
     root.title("Список сотрудников компании")
     root.geometry("665x450")
     root.resizable(False, False)
     root.mainloop()
-
-
-
