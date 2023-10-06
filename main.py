@@ -5,11 +5,8 @@ import sqlite3
 class MainFrame(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
-        self.init_main()
         self.db = db
         self.view_records()
-
-    def init_main(self):
         """Инициализация основного интерфейса программы"""
         toolbar = tk.Frame(bg="#d7d8e0", bd=2)
         toolbar.pack(side=tk.TOP, fill=tk.X)
@@ -163,12 +160,11 @@ class ChildFrame(tk.Toplevel):
 class UpdateEmployeeDataFrame(ChildFrame):
     def __init__(self):
         super().__init__()
-        self.init_edit()
+
         self.view = app
         self.db = db
         self.default_data()
 
-    def init_edit(self):
         """Инициализация окна редактирования"""
         self.title("Редактирование сотрудника")
         btn_edit = ttk.Button(self, text="Редактировать")
