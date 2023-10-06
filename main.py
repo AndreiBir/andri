@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import sqlite3
 
-class Main(tk.Frame):
+class MainFrame(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_main()
@@ -121,14 +121,11 @@ class Main(tk.Frame):
         [self.tree.delete(i) for i in self.tree.get_children()]
         [self.tree.insert("", "end", values=row) for row in self.db.cursor.fetchall()]
 
-class Child(tk.Toplevel):
+class ChildFrame(tk.Toplevel):
     def __init__(self):
         super().__init__(root)
         self.init_child()
         self.view = app
-
-    def init_child(self):
-        """Инициализация дочернего окна"""
         self.title("Добавить")
         self.geometry("400x220")
         self.resizable(False, False)
@@ -164,7 +161,7 @@ class Child(tk.Toplevel):
         )
 
 
-class Update(Child):
+class UpdateEmployeeDataFrame(Child):
     def __init__(self):
         super().__init__()
         self.init_edit()
@@ -197,7 +194,7 @@ class Update(Child):
         self.entry_tel.insert(0, row[3])
 
 
-class Search(tk.Toplevel):
+class SearchEmployeeFrame(tk.Toplevel):
     def __init__(self):
         super().__init__()
         self.init_search()
