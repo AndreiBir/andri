@@ -5,8 +5,11 @@ import sqlite3
 class MainFrame(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
+        self.init_main()
         self.db = db
         self.view_records()
+
+    def init_main(self):
         """Инициализация основного интерфейса программы"""
         toolbar = tk.Frame(bg="#d7d8e0", bd=2)
         toolbar.pack(side=tk.TOP, fill=tk.X)
@@ -67,7 +70,6 @@ class MainFrame(tk.Frame):
             command=self.open_search_dialog,
         )
         btn_search.pack(side=tk.LEFT)
-
     def open_dialog(self):
         """Открытие диалогового окна для добавления записи"""
         ChildFrame()
