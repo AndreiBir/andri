@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import sqlite3
-
+import tkinter.messagebox as messagebox
 class MainFrame(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
@@ -165,26 +165,30 @@ class UpdateEmployeeDataFrame(ChildFrame):
 
         self.view = app
         self.db = db
-        self.default_data()
+        try:
+            self.default_data()
 
-        """Инициализация окна редактирования"""
-        self.title("Редактирование сотрудника")
-        btn_edit = ttk.Button(self, text="Редактировать")
-        btn_edit.place(x=205, y=170)
-        btn_edit.bind(
-            "<Button-1>",
-            lambda event: self.view.update_records(
-                self.entry_name.get(), self.entry_email.get(), self.entry_tel.get()
-            ),
-        )
-        btn_edit.bind("<Button-1>", lambda event: self.destroy(), add="+")
-        self.btn_ok.destroy()
+            """Инициализация окна редактирования"""
+            self.title("Редактирование сотрудника")
+            btn_edit = ttk.Button(self, text="Редактировать")
+            btn_edit.place(x=205, y=170)
+            btn_edit.bind(
+                "<Button-1>",
+                lambda event: self.view.update_records(
+                    self.entry_name.get(), self.entry_email.get(), self.entry_tel.get()
+                ),
+            )
+            btn_edit.bind("<Button-1>", lambda event: self.destroy(), add="+")
+            self.btn_ok.destroy()
+        except IndexError:
+            messagebox.showerror("Error", "Пожалуйста, выберите сотрудника.")
+            self.destroy()
+   
 
     def default_data(self):
-        self.db.cursor.execute(
-            "SELECT * FROM db WHERE id=?",
-            self.view.tree.set(self.view.tree.selection()[0], "#1"),
-        )
+        selected_item = self.view.tree.selection()[0]
+        value = self.view.tree.set(selected_item, "#1") 
+        self.db.cursor.execute("SELECT * FROM db WHERE id=?", (value,))
         row = self.db.cursor.fetchone()
         self.entry_name.insert(0, row[1])
         self.entry_email.insert(0, row[2])
